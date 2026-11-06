@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PURE UNLIMITED AI</title>
+<title>FINAL WORKING AI</title>
+<script src="https://js.puter.com/v2/"></script>
 <style>
 body{background:#000;color:#fff;font-family:sans-serif;padding:10px;margin:0}
 h1{color:#00ff88;text-align:center}
@@ -17,8 +18,8 @@ button{padding:15px 20px;background:#00ff88;border:none;border-radius:10px;font-
 </style>
 </head>
 <body>
-<h1>🤖 PURE UNLIMITED - NO LIMIT</h1>
-<div id="chat"><div class="msg ai">Boss, আমি 100% Unlimited! কোনো লিমিট নাই! 🔥</div></div>
+<h1>🤖 100% WORKING UNLIMITED</h1>
+<div id="chat"><div class="msg ai">Boss, এবার 100% কাজ করবে! আমি Puter AI! 🔥</div></div>
 <div class="row"><input id="input" placeholder="যা খুশি লেখো..."><button onclick="ask()">SEND</button></div>
 <script>
 async function ask(){
@@ -26,12 +27,10 @@ let i=document.getElementById('input'),t=i.value.trim();if(!t)return;
 let c=document.getElementById('chat');c.innerHTML+=`<div class="msg user">${t}</div>`;i.value='';
 let id='a'+Date.now();c.innerHTML+=`<div class="msg ai" id="${id}">⚡ লিখছি...</div>`;c.scrollTop=c.scrollHeight;
 try{
-let r=await fetch("https://ai.hackclub.com/chat/completions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"openai/gpt-oss-120b",messages:[{role:"user",content:t}]})});
-let j=await r.json();
-let ans=j.choices[0].message.content;
-document.getElementById(id).innerText=ans;
+let res = await puter.ai.chat(t);
+document.getElementById(id).innerText=res;
 }catch(e){
-document.getElementById(id).innerText="Boss নেট চেক করো, আরেকবার SEND দাও!";
+document.getElementById(id).innerText="Error: "+e.message;
 }
 c.scrollTop=c.scrollHeight;
 }
