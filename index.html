@@ -3,57 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FINAL GOD MODE</title>
-<style>
-body{background:#0a0a0a;color:#fff;font-family:sans-serif;margin:0;padding:10px}
-h1{color:#00ff88;text-align:center;font-size:22px}
-#chat{height:72vh;overflow-y:auto;background:#111;padding:10px;border-radius:12px;border:1px solid #00ff88}
-.msg{padding:12px;margin:8px 0;border-radius:12px;white-space:pre-wrap}
-.user{background:#00ff88;color:#000;margin-left:auto;width:fit-content;max-width:85%}
-.ai{background:#1e1e1e;color:#fff;border:1px solid #333}
-.row{display:flex;gap:6px;margin-top:10px}
-input{flex:1;padding:14px;border-radius:12px;border:none;background:#222;color:#fff}
-button{padding:14px 20px;background:#00ff88;border:none;border-radius:12px;font-weight:bold}
-</style>
+<title>MY AI - FINAL</title>
+<style>body{background:#000;color:#fff;font-family:sans-serif;padding:10px;margin:0}h1{color:#00ff88;text-align:center}#chat{height:75vh;overflow:auto;background:#111;padding:10px;border-radius:10px;border:1px solid #00ff88}.msg{padding:10px;margin:6px 0;border-radius:10px}.user{background:#00ff88;color:#000;margin-left:auto;width:fit-content;max-width:80%}.ai{background:#222}.row{display:flex;gap:5px;margin-top:10px}input{flex:1;padding:12px;border-radius:10px;border:0;background:#222;color:#fff}button{padding:12px 18px;background:#00ff88;border:0;border-radius:10px;font-weight:bold}</style>
 </head>
 <body>
-<h1>🤖 FINAL UNLIMITED GOD MODE</h1>
-<div id="chat"><div class="msg ai">Boss! এবার 100% চলবে! 3টা সার্ভার লাগানো আছে! 🔥</div></div>
-<div class="row"><input id="input" placeholder="লেখো বস..."><button onclick="ask()">SEND</button></div>
+<h1>MY SUPER AI ✅</h1>
+<div id="chat"><div class="msg ai">Boss, আমি রেডি! এখন লিখো, আর লিমিট আসবে না।</div></div>
+<div class="row"><input id="input" placeholder="লিখো..."><button onclick="ask()">SEND</button></div>
 <script>
 async function ask(){
-let i=document.getElementById('input'),t=i.value.trim();if(!t)return;
-let c=document.getElementById('chat');c.innerHTML+=`<div class="msg user">${t}</div>`;i.value='';
-let id='a'+Date.now();c.innerHTML+=`<div class="msg ai" id="${id}">⚡ চিন্তা করছি Boss...</div>`;c.scrollTop=c.scrollHeight;
-let answer=null;
-
-// TRY 1: HackClub Unlimited
+let inp=document.getElementById('input');let txt=inp.value.trim();if(!txt)return;
+let chat=document.getElementById('chat');chat.innerHTML+=`<div class="msg user">${txt}</div>`;inp.value='';
+let id=Date.now();chat.innerHTML+=`<div class="msg ai" id="${id}">...</div>`;chat.scrollTop=chat.scrollHeight;
 try{
-let r=await fetch("https://ai.hackclub.com/chat/completions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:t}]})});
-let j=await r.json();answer=j.choices[0].message.content;
-}catch(e){}
-
-// TRY 2: Pollinations OpenAI-Large (No limit model)
-if(!answer){
-try{
-let r=await fetch(`https://text.pollinations.ai/${encodeURIComponent(t)}?model=openai-large`);
-answer=await r.text();
-if(answer.includes("Free limit")) answer=null;
-}catch(e){}
-}
-
-// TRY 3: Backup AI
-if(!answer){
-try{
-let r=await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(t)}&format=json`);
-answer="Boss! আমি আছি! তুমি '"+t+"' লিখেছো, বলো কি বানিয়ে দেবো?";
-}catch(e){}
-}
-
-document.getElementById(id).innerText=answer||"Boss একটু পর আবার SEND চাপো! 3টা সার্ভার ট্রাই করছি!";
-c.scrollTop=c.scrollHeight;
+let res=await fetch('https://text.pollinations.ai/'+encodeURIComponent(txt)+'?model=mistral');
+let data=await res.text();
+document.getElementById(id).innerText=data;
+}catch(e){document.getElementById(id).innerText="Boss আবার SEND চাপো, নেট একটু স্লো!";}
+chat.scrollTop=chat.scrollHeight;
 }
 document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter')ask()});
 </script>
 </body>
-  </html>
+</html>
