@@ -3,49 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MY SUPER AI - GOD MODE FIXED</title>
+<title>MY SUPER AI - ULTRA FAST</title>
 <style>
 body{background:#0a0a0a;color:#fff;font-family:sans-serif;margin:0;padding:10px}
-h1{color:#00ff88;text-align:center}
-#chat{height:65vh;overflow-y:auto;background:#111;padding:10px;border-radius:12px;margin-bottom:10px;border:1px solid #00ff88}
-.msg{padding:12px;margin:8px 0;border-radius:10px;max-width:90%;line-height:1.5}
-.user{background:#00ff88;color:#000;margin-left:auto}
-.ai{background:#222;color:#fff;border:1px solid #333}
-.row{display:flex;gap:6px}
-input{flex:1;padding:14px;border-radius:10px;border:none;background:#222;color:#fff}
-button{padding:14px 18px;background:#00ff88;border:none;border-radius:10px;font-weight:bold}
+h1{color:#00ff88;text-align:center;margin:5px}
+#chat{height:72vh;overflow-y:auto;background:#111;padding:10px;border-radius:12px;border:1px solid #00ff88}
+.msg{padding:12px;margin:8px 0;border-radius:12px;animation:pop .2s}
+.user{background:#00ff88;color:#000;margin-left:auto;width:fit-content;max-width:85%}
+.ai{background:#1e1e1e;color:#fff;border:1px solid #333}
+.row{display:flex;gap:6px;margin-top:10px;position:sticky;bottom:0}
+input{flex:1;padding:14px;border-radius:12px;border:none;background:#222;color:#fff;outline:none}
+button{padding:14px 20px;background:#00ff88;border:none;border-radius:12px;font-weight:bold}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
 <h1>🤖 MY SUPER AI - GOD MODE</h1>
-<div id="chat">
-<div class="msg ai">হ্যাঁ বস! আমি এখন 100% FIXED! আর Error দেবো না।<br><br>বলো কি বানাবো?</div>
-</div>
-<div class="row">
-<input id="input" placeholder="লেখো বস...">
-<button onclick="ask()">SEND</button>
-</div>
+<div id="chat"><div class="msg ai">হ্যাঁ বস! এখন ULTRA FAST! 2 সেকেন্ডে উত্তর দেবো!</div></div>
+<div class="row"><input id="input" placeholder="লেখো বস..."><button onclick="ask()">SEND</button></div>
 <script>
+let busy=false;
 async function ask(){
-let input=document.getElementById('input');
-let text=input.value.trim();
-if(!text) return;
-let chat=document.getElementById('chat');
-chat.innerHTML+=`<div class="msg user">${text}</div>`;
-input.value='';
-let id='a'+Date.now();
-chat.innerHTML+=`<div class="msg ai" id="${id}">ভাবছি বস... 2 সেকেন্ড...</div>`;
-chat.scrollTop=chat.scrollHeight;
+if(busy)return;
+let i=document.getElementById('input'),t=i.value.trim();if(!t)return;
+let c=document.getElementById('chat');c.innerHTML+=`<div class="msg user">${t}</div>`;i.value='';
+let id='a'+Date.now();c.innerHTML+=`<div class="msg ai" id="${id}">⚡ লিখছি...</div>`;c.scrollTop=c.scrollHeight;busy=true;
 try{
-let prompt = encodeURIComponent(`You are MY SUPER AI GOD MODE, Boss's AI. Reply in Bangla. Boss asks: ${text}`);
-let res = await fetch(`https://text.pollinations.ai/${prompt}`);
-let data = await res.text();
-document.getElementById(id).innerText=data;
-}catch(e){
-document.getElementById(id).innerText="Boss, নেট একটু স্লো, আবার SEND চাপো! Error: "+e.message;
+let url=`https://text.pollinations.ai/${encodeURIComponent(t)}?model=openai-fast&json=false`;
+let r=await fetch(url);
+let d=await r.text();
+document.getElementById(id).innerText=d;
+}catch(e){document.getElementById(id).innerText="Boss নেট স্লো, আবার চাপো!";}
+busy=false;c.scrollTop=c.scrollHeight;
 }
-chat.scrollTop=chat.scrollHeight;
-}
+document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter')ask()});
 </script>
 </body>
 </html>
