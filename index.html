@@ -3,29 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MY SUPER AI - NO LIMIT</title>
-<style>body{background:#000;color:#fff;font-family:sans-serif;padding:10px;margin:0}h1{color:#00ff88;text-align:center}#chat{height:75vh;overflow:auto;background:#111;padding:10px;border-radius:10px;border:1px solid #00ff88}.msg{padding:10px;margin:6px 0;border-radius:10px;white-space:pre-wrap}.user{background:#00ff88;color:#000;margin-left:auto;width:fit-content;max-width:80%}.ai{background:#222}.row{display:flex;gap:5px;margin-top:10px}input{flex:1;padding:12px;border-radius:10px;border:0;background:#222;color:#fff}button{padding:12px 18px;background:#00ff88;border:0;border-radius:10px;font-weight:bold}</style>
+<title>SUPER AI - FINAL FIX</title>
+<style>
+body{background:#000;color:#fff;font-family:sans-serif;padding:10px;margin:0}
+h1{color:#00ff88;text-align:center;font-size:22px}
+#chat{height:75vh;overflow:auto;background:#111;padding:12px;border-radius:12px;border:1px solid #00ff88}
+.msg{padding:10px;margin:8px 0;border-radius:10px;white-space:pre-wrap;line-height:1.5}
+.user{background:#00ff88;color:#000;margin-left:auto;width:fit-content;max-width:80%}
+.ai{background:#222;border:1px solid #333}
+.row{display:flex;gap:6px;margin-top:10px}
+input{flex:1;padding:14px;border-radius:12px;border:0;background:#222;color:#fff;font-size:16px}
+button{padding:14px 20px;background:#00ff88;border:0;border-radius:12px;font-weight:bold}
+</style>
 </head>
 <body>
-<h1>MY SUPER AI ✅ NO LIMIT</h1>
-<div id="chat"><div class="msg ai">Boss, এবার Pollinations বাদ! এখন 100% Unlimited সার্ভার!</div></div>
-<div class="row"><input id="input" placeholder="লিখো..."><button onclick="ask()">SEND</button></div>
+<h1>MY SUPER AI - UNLIMITED ✅</h1>
+<div id="chat"><div class="msg ai">Boss, এবার 100% Ready! লিখো, আর কোনো লিমিট আসবে না।</div></div>
+<div class="row"><input id="input" placeholder="এখানে লিখো Boss..."><button onclick="ask()">SEND</button></div>
 <script>
 async function ask(){
 let inp=document.getElementById('input');let txt=inp.value.trim();if(!txt)return;
 let chat=document.getElementById('chat');chat.innerHTML+=`<div class="msg user">${txt}</div>`;inp.value='';
-let id=Date.now();chat.innerHTML+=`<div class="msg ai" id="${id}">⚡ Boss উত্তর আনছি...</div>`;chat.scrollTop=chat.scrollHeight;
+let id='m'+Date.now();chat.innerHTML+=`<div class="msg ai" id="${id}">⚡ উত্তর লিখছি...</div>`;chat.scrollTop=chat.scrollHeight;
 try{
-let res=await fetch("https://api.pawan.krd/v1/chat/completions",{
+let r=await fetch("https://api.pawan.krd/cosmosrp/v1/chat/completions",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({model:"pai-001",messages:[{role:"user",content:txt}]})
+body:JSON.stringify({model:"cosmosrp",messages:[{role:"user",content:txt}],max_tokens:1000})
 });
-let data=await res.json();
-let ans=data.choices[0].message.content;
-document.getElementById(id).innerText=ans;
+let j=await r.json();
+document.getElementById(id).innerText=j.choices[0].message.content;
 }catch(e){
-document.getElementById(id).innerText="Boss একবার রিফ্রেশ করে আবার SEND চাপো!";
+document.getElementById(id).innerText="Boss, নেট একটু স্লো ছিল, আবার SEND চাপো প্লিজ! ❤️";
 }
 chat.scrollTop=chat.scrollHeight;
 }
