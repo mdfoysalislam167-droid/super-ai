@@ -1,23 +1,61 @@
 <!DOCTYPE html>
-<html>
-<body style="background:#000;color:#fff;font-family:sans-serif;padding:15px">
-<h2 style="color:#0f0">Super AI - Final</h2>
-<div id="a" style="background:#222;padding:10px;height:70vh;overflow:auto"></div>
-<input id="q" style="width:70%;padding:12px" placeholder="লেখো...">
-<button onclick="go()" style="padding:12px;background:#0f0">SEND</button>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FINAL GOD MODE</title>
+<script src="https://js.puter.com/v2/"></script>
+<style>
+body{background:#000;color:#fff;font-family:sans-serif;padding:10px;margin:0}
+h1{color:#00ff88;text-align:center;font-size:18px}
+#chat{height:75vh;overflow:auto;background:#111;padding:10px;border-radius:10px;border:1px solid #00ff88}
+.msg{padding:10px;margin:6px 0;border-radius:10px;white-space:pre-wrap}
+.user{background:#00ff88;color:#000;margin-left:auto;width:fit-content;max-width:80%}
+.ai{background:#222}
+.row{display:flex;gap:5px;margin-top:10px}
+input{flex:1;padding:15px;border-radius:10px;border:none;background:#222;color:#fff}
+button{padding:15px 20px;background:#00ff88;border:none;border-radius:10px;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>🤖 UNLIMITED GOD MODE - 3 ENGINE</h1>
+<div id="chat"><div class="msg ai">Boss, এবার 3 টা ইঞ্জিন আছে, একটা না চললে আরেকটা চলবে! 🔥</div></div>
+<div class="row"><input id="input" placeholder="যা খুশি লেখো..."><button onclick="ask()">SEND</button></div>
 <script>
-async function go(){
-let Q=document.getElementById('q').value;
-let A=document.getElementById('a');
-A.innerHTML+=`<div style="color:#0f0">You: ${Q}</div>`;
-document.getElementById('q').value='';
-A.innerHTML+=`<div id="x">AI ভাবছে...</div>`;
-let res=await fetch('https://text.pollinations.ai/'+encodeURIComponent(Q));
-let txt=await res.text();
-document.getElementById('x').id='';
-A.innerHTML+=`<div>AI: ${txt}</div>`;
-A.scrollTop=A.scrollHeight;
+async function ask(){
+let i=document.getElementById('input'),t=i.value.trim();if(!t)return;
+let c=document.getElementById('chat');c.innerHTML+=`<div class="msg user">${t}</div>`;i.value='';
+let id='a'+Date.now();c.innerHTML+=`<div class="msg ai" id="${id}">⚡ ভাবছি...</div>`;c.scrollTop=c.scrollHeight;
+let ans=null;
+
+// ENGINE 1: Pollinations - Fastest
+try{
+let r=await fetch(`https://text.pollinations.ai/${encodeURIComponent(t)}`);
+let txt=await r.text();
+if(txt && !txt.includes("API key") && !txt.includes("budget") && txt.length>2) ans=txt;
+}catch(e){}
+
+// ENGINE 2: HackClub - Unlimited
+if(!ans){
+try{
+let r=await fetch("https://ai.hackclub.com/chat/completions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:t}]})});
+let j=await r.json();
+ans=j.choices[0].message.content;
+}catch(e){}
 }
+
+// ENGINE 3: Puter - Backup
+if(!ans){
+try{
+let r=await puter.ai.chat(t);
+ans=r.toString();
+}catch(e){}
+}
+
+document.getElementById(id).innerText=ans||"Boss আরেকবার SEND দাও, 3 টা ইঞ্জিন ট্রাই করছি!";
+c.scrollTop=c.scrollHeight;
+}
+document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter')ask()});
 </script>
 </body>
-</html>
+                                                                 </html>
