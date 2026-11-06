@@ -3,38 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MY SUPER AI - ULTRA FAST</title>
+<title>MY SUPER AI - UNLIMITED</title>
 <style>
 body{background:#0a0a0a;color:#fff;font-family:sans-serif;margin:0;padding:10px}
-h1{color:#00ff88;text-align:center;margin:5px}
+h1{color:#00ff88;text-align:center}
 #chat{height:72vh;overflow-y:auto;background:#111;padding:10px;border-radius:12px;border:1px solid #00ff88}
-.msg{padding:12px;margin:8px 0;border-radius:12px;animation:pop .2s}
+.msg{padding:12px;margin:8px 0;border-radius:12px;white-space:pre-wrap}
 .user{background:#00ff88;color:#000;margin-left:auto;width:fit-content;max-width:85%}
 .ai{background:#1e1e1e;color:#fff;border:1px solid #333}
-.row{display:flex;gap:6px;margin-top:10px;position:sticky;bottom:0}
-input{flex:1;padding:14px;border-radius:12px;border:none;background:#222;color:#fff;outline:none}
+.row{display:flex;gap:6px;margin-top:10px}
+input{flex:1;padding:14px;border-radius:12px;border:none;background:#222;color:#fff}
 button{padding:14px 20px;background:#00ff88;border:none;border-radius:12px;font-weight:bold}
-@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
-<h1>🤖 MY SUPER AI - GOD MODE</h1>
-<div id="chat"><div class="msg ai">হ্যাঁ বস! এখন ULTRA FAST! 2 সেকেন্ডে উত্তর দেবো!</div></div>
+<h1>🤖 MY SUPER AI - UNLIMITED GOD MODE</h1>
+<div id="chat"><div class="msg ai">Boss! এখন থেকে UNLIMITED! যত খুশি মেসেজ করো, কোনো লিমিট নেই! 🔥</div></div>
 <div class="row"><input id="input" placeholder="লেখো বস..."><button onclick="ask()">SEND</button></div>
 <script>
-let busy=false;
 async function ask(){
-if(busy)return;
 let i=document.getElementById('input'),t=i.value.trim();if(!t)return;
 let c=document.getElementById('chat');c.innerHTML+=`<div class="msg user">${t}</div>`;i.value='';
-let id='a'+Date.now();c.innerHTML+=`<div class="msg ai" id="${id}">⚡ লিখছি...</div>`;c.scrollTop=c.scrollHeight;busy=true;
+let id='a'+Date.now();c.innerHTML+=`<div class="msg ai" id="${id}">⚡ Boss ভাবছি...</div>`;c.scrollTop=c.scrollHeight;
 try{
-let url=`https://text.pollinations.ai/${encodeURIComponent(t)}?model=openai-fast&json=false`;
-let r=await fetch(url);
-let d=await r.text();
-document.getElementById(id).innerText=d;
-}catch(e){document.getElementById(id).innerText="Boss নেট স্লো, আবার চাপো!";}
-busy=false;c.scrollTop=c.scrollHeight;
+let res=await fetch("https://ai.hackclub.com/chat/completions",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({messages:[{role:"user",content:t}]})
+});
+let j=await res.json();
+let ans=j.choices[0].message.content;
+document.getElementById(id).innerText=ans;
+}catch(e){
+document.getElementById(id).innerText="Boss একটু পর আবার চাপো! নেট স্লো ছিলো।";
+}
+c.scrollTop=c.scrollHeight;
 }
 document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter')ask()});
 </script>
